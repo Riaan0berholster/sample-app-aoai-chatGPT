@@ -161,12 +161,18 @@ const Chat = () => {
                             })
                             setShowLoadingMessage(false);
                             setMessages([...messages, ...result.choices[0].messages]);
+                            if (window.parent){
+                                window.parent.postMessage(result.choices[0].messages, '*');
+                            }
                             runningText = "";
                         }
                         catch { }
                     });
                 }
-                conversation.messages.push(...result.choices[0].messages)
+                conversation.messages.push(...result.choices[0].messages);
+                if (window.parent){
+                    window.parent.postMessage(result.choices[0].messages, '*');
+                }
                 appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: conversation });
                 setMessages([...messages, ...result.choices[0].messages]);
             }
@@ -294,6 +300,9 @@ const Chat = () => {
                                 setMessages([...messages, userMessage, ...result.choices[0].messages]);
                             }else{
                                 setMessages([...messages, ...result.choices[0].messages]);
+                                if (window.parent){
+                                    window.parent.postMessage(result.choices[0].messages, '*');
+                                }
                             }
                             runningText = "";
                         }
@@ -329,6 +338,9 @@ const Chat = () => {
                 }
                 appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: resultConversation });
                 setMessages([...messages, ...result.choices[0].messages]);
+                if (window.parent){
+                    window.parent.postMessage(result.choices[0].messages, '*');
+                }
             }
             
         } catch ( e )  {
