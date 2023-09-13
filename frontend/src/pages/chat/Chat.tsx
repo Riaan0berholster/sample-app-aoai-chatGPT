@@ -162,7 +162,7 @@ const Chat = () => {
                             setShowLoadingMessage(false);
                             setMessages([...messages, ...result.choices[0].messages]);
                             if (window.parent){
-                                window.parent.postMessage(result.choices[0].messages, '*');
+                                window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
                             }
                             runningText = "";
                         }
@@ -171,7 +171,7 @@ const Chat = () => {
                 }
                 conversation.messages.push(...result.choices[0].messages);
                 if (window.parent){
-                    window.parent.postMessage(result.choices[0].messages, '*');
+                    window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
                 }
                 appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: conversation });
                 setMessages([...messages, ...result.choices[0].messages]);
@@ -301,7 +301,7 @@ const Chat = () => {
                             }else{
                                 setMessages([...messages, ...result.choices[0].messages]);
                                 if (window.parent){
-                                    window.parent.postMessage(result.choices[0].messages, '*');
+                                    window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
                                 }
                             }
                             runningText = "";
@@ -339,7 +339,7 @@ const Chat = () => {
                 appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: resultConversation });
                 setMessages([...messages, ...result.choices[0].messages]);
                 if (window.parent){
-                    window.parent.postMessage(result.choices[0].messages, '*');
+                    window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
                 }
             }
             
