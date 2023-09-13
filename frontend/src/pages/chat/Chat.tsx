@@ -161,9 +161,6 @@ const Chat = () => {
                             })
                             setShowLoadingMessage(false);
                             setMessages([...messages, ...result.choices[0].messages]);
-                            if (window.parent){
-                                window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
-                            }
                             runningText = "";
                         }
                         catch { }
@@ -171,7 +168,7 @@ const Chat = () => {
                 }
                 conversation.messages.push(...result.choices[0].messages);
                 if (window.parent){
-                    window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
+                    window.parent.postMessage(JSON.stringify(result.choices[0].messages[0].content), '*');
                 }
                 appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: conversation });
                 setMessages([...messages, ...result.choices[0].messages]);
@@ -300,9 +297,6 @@ const Chat = () => {
                                 setMessages([...messages, userMessage, ...result.choices[0].messages]);
                             }else{
                                 setMessages([...messages, ...result.choices[0].messages]);
-                                if (window.parent){
-                                    window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
-                                }
                             }
                             runningText = "";
                         }
@@ -339,7 +333,7 @@ const Chat = () => {
                 appStateContext?.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: resultConversation });
                 setMessages([...messages, ...result.choices[0].messages]);
                 if (window.parent){
-                    window.parent.postMessage(JSON.stringify(result.choices[0].messages), '*');
+                    window.parent.postMessage(JSON.stringify(result.choices[0].messages[0].content), '*');
                 }
             }
             
